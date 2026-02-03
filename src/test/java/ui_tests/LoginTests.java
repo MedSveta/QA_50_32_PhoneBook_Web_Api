@@ -9,24 +9,27 @@ import pages.HomePage;
 import pages.LoginPage;
 import utils.RetryAnalyser;
 
+import static utils.PropertiesReader.*;
+
 public class LoginTests extends AppManager {
     @Test(retryAnalyzer = RetryAnalyser.class)
-    public void loginPositiveTest(){
+    public void loginPositiveTest() {
         // System.out.println("first test");
         HomePage homePage = new HomePage(getDriver());
         homePage.clickBtnLogin();
         LoginPage loginPage = new LoginPage(getDriver());
-        loginPage.typeLoginRegistrationForm("sveta548@smd.com",
-                "Password123!");
+        // loginPage.typeLoginRegistrationForm("sveta548@smd.com","Password123!");
+        loginPage.typeLoginRegistrationForm(getProperty("base.properties", "login"),
+                getProperty("base.properties", "password"));
         loginPage.clickBtnLoginForm();
         Assert.assertTrue(new ContactPage(getDriver())
                 .isTextInBtnAddPresent("ADD"));
     }
 
     @Test
-    public void loginPositiveTestWithUser(){
-        User user = new User("sveta548@smd.com",
-                "Password123!");
+    public void loginPositiveTestWithUser() {
+        User user = new User(getProperty("base.properties", "login"),
+                getProperty("base.properties", "password"));
         HomePage homePage = new HomePage(getDriver());
         homePage.clickBtnLogin();
         LoginPage loginPage = new LoginPage(getDriver());
@@ -36,7 +39,7 @@ public class LoginTests extends AppManager {
     }
 
     @Test
-    public void loginNegativeTest_WrongEmail(){
+    public void loginNegativeTest_WrongEmail() {
         User user = new User("familymail.ru", "Family123!");
         HomePage homePage = new HomePage(getDriver());
         homePage.clickBtnLogin();
