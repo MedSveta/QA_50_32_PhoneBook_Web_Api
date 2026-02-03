@@ -7,16 +7,17 @@ import org.testng.annotations.Test;
 import pages.ContactPage;
 import pages.HomePage;
 import pages.LoginPage;
+import utils.RetryAnalyser;
 
 public class LoginTests extends AppManager {
-    @Test
+    @Test(retryAnalyzer = RetryAnalyser.class)
     public void loginPositiveTest(){
         // System.out.println("first test");
         HomePage homePage = new HomePage(getDriver());
         homePage.clickBtnLogin();
         LoginPage loginPage = new LoginPage(getDriver());
-        loginPage.typeLoginRegistrationForm("family@mail.ru",
-                "Family123!");
+        loginPage.typeLoginRegistrationForm("sveta548@smd.com",
+                "Password123!");
         loginPage.clickBtnLoginForm();
         Assert.assertTrue(new ContactPage(getDriver())
                 .isTextInBtnAddPresent("ADD"));
@@ -24,8 +25,8 @@ public class LoginTests extends AppManager {
 
     @Test
     public void loginPositiveTestWithUser(){
-        User user = new User("family@mail.ru",
-                "Family123!");
+        User user = new User("sveta548@smd.com",
+                "Password123!");
         HomePage homePage = new HomePage(getDriver());
         homePage.clickBtnLogin();
         LoginPage loginPage = new LoginPage(getDriver());
