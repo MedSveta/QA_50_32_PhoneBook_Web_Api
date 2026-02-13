@@ -7,12 +7,13 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 
-public class AddPage extends BasePage{
-    public AddPage(WebDriver driver){
+public class AddPage extends BasePage {
+    public AddPage(WebDriver driver) {
         setDriver(driver);
         PageFactory.initElements(new AjaxElementLocatorFactory(driver,
                 10), this);
     }
+
     @FindBy(xpath = "//div[@class='add_form__2rsm2']/input[1]")
     WebElement inputName;
     @FindBy(xpath = "//div[@class='add_form__2rsm2']/input[2]")
@@ -28,7 +29,7 @@ public class AddPage extends BasePage{
     @FindBy(xpath = "//b[text()='Save']/..")
     WebElement btnSave;
 
-    public void typeContactForm(Contact contact){
+    public void typeContactForm(Contact contact) {
         inputName.sendKeys(contact.getName());
         inputLastName.sendKeys(contact.getLastName());
         inputPhone.sendKeys(contact.getPhone());
@@ -36,5 +37,9 @@ public class AddPage extends BasePage{
         inputAddress.sendKeys(contact.getAddress());
         inputDescription.sendKeys(contact.getDescription());
         btnSave.click();
+    }
+
+    public boolean isButtonSaveDisabled() {
+        return btnSave.isDisplayed();
     }
 }
