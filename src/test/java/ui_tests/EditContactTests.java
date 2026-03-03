@@ -6,6 +6,7 @@ import org.checkerframework.checker.units.qual.A;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 import pages.*;
 import utils.ContactFactory;
 
@@ -13,6 +14,7 @@ import static utils.HeaderMenuItem.LOGIN;
 import static utils.PropertiesReader.getProperty;
 
 public class EditContactTests extends AppManager {
+    SoftAssert softAssert = new SoftAssert();
     HomePage homePage;
     LoginPage loginPage;
     ContactPage contactPage;
@@ -38,6 +40,19 @@ public class EditContactTests extends AppManager {
                 .isContactPresent(contact));
     }
 
-
-
+    @Test
+    public void editFirstContactPositiveTest_WithCardOfContact() {
+        Contact contact = ContactFactory
+                .positiveContact();
+        contactPage.typeEditForm(contact);
+        contactPage.pause(3);
+        String text = contactPage.getTextInContact();
+        softAssert.assertTrue(text.contains(contact.getName()),
+                "validate Name in DetailCard");
+        softAssert.assertTrue(text.contains(contact.getEmail()),
+                "validate Email in DetailCard");
+        softAssert.assertTrue(text.contains(contact.getPhone()),
+                "validate Phone in DetailCard");
+        softAssert.assertAll();
+    }
 }
