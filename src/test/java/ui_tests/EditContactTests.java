@@ -19,7 +19,7 @@ public class EditContactTests extends AppManager {
     LoginPage loginPage;
     ContactPage contactPage;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void login() {
         homePage = new HomePage(getDriver());
         loginPage = BasePage.clickButtonHeader(LOGIN);
@@ -30,7 +30,7 @@ public class EditContactTests extends AppManager {
         contactPage = new ContactPage(getDriver());
     }
 
-    @Test
+    @Test(groups = {"smoke", "contact"})
     public void editFirstContactPositiveTest() {
         Contact contact = ContactFactory
                 .positiveContact();
@@ -40,7 +40,7 @@ public class EditContactTests extends AppManager {
                 .isContactPresent(contact));
     }
 
-    @Test
+    @Test(groups = "negative")
     public void editFirstContactPositiveTest_WithCardOfContact() {
         Contact contact = ContactFactory
                 .positiveContact();
