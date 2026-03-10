@@ -57,3 +57,11 @@ task different_tests(type: Test){
         }
     }
 }
+
+task browser_tests(type:Test){
+    useTestNG(){
+        if (project.hasProperty('browser'))
+            systemProperty 'browser', "${browser}"
+        suites 'src/test/resources/smoketests.xml'
+    }
+}

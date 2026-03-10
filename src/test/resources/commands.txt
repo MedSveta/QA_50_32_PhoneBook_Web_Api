@@ -2,6 +2,7 @@
 .\gradlew clean smoke_contact_tests
 .\gradlew clean negativetests
 .\gradlew clean different_tests -Dsuite=smoke_contact_tests
+.\gradlew clean browser_tests -Pbrowser=firefox
 
 
 через терминал компьтера
