@@ -118,4 +118,24 @@ public class AddNewContactApiTests implements BaseApi {
         }
         Assert.assertEquals(response.code(), 403);
     }
+
+    @Test
+    public void addNewContactNegative_Wrong_Token_ApiTest() {
+        Contact contact = positiveContact();
+        RequestBody requestBody = RequestBody
+                .create(GSON.toJson(contact), JSON);
+        Request request = new Request.Builder()
+                .url(BASE_URL + ADD_NEW_CONTACT_URL)
+                .addHeader(AUTH, "token.getToken()")
+                .post(requestBody)
+                .build();
+        Response response;
+        try {
+            response = OK_HTTP_CLIENT.newCall(request)
+                    .execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Assert.assertEquals(response.code(), 401);
+    }
 }
