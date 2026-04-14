@@ -25,6 +25,7 @@ public class AppManager {
 
     @BeforeMethod(alwaysRun = true)
     public void setup() {
+
         //driver = new ChromeDriver();
         switch (browser.toLowerCase()){
             case "firefox":

@@ -1,6 +1,8 @@
 package ui_tests;
 
 import dto.User;
+import io.qameta.allure.Description;
+import io.qameta.allure.Owner;
 import manager.AppManager;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
@@ -15,6 +17,8 @@ import static utils.PropertiesReader.*;
 @Listeners(TestNGListener.class)
 
 public class LoginTests extends AppManager {
+    @Owner("Sveta Med")
+    @Description("login with positive data")
     @Test(retryAnalyzer = RetryAnalyser.class)
     public void loginPositiveTest() {
         // System.out.println("first test");

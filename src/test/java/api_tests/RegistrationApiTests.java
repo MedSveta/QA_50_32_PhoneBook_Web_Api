@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static utils.PropertiesReader.getProperty;
 import static utils.UserFactory.positiveUser;
 
 public class RegistrationApiTests implements BaseApi {
@@ -99,5 +100,43 @@ public class RegistrationApiTests implements BaseApi {
             throw new RuntimeException(e);
         }
         Assert.assertEquals(response.code(), 500);
+    }
+
+    @Test
+    public void LoginNegativeApiTest_WrongRequestBody() {
+        User user = positiveUser();
+        Map<String, String> wrongUser = new HashMap<>();
+        wrongUser.put("password" , user.getPassword());
+        wrongUser.put("user" , user.getUsername()); //wrong field key
+
+        RequestBody requestBody = RequestBody
+                .create(GSON.toJson(wrongUser), JSON);
+        Request request = new Request.Builder()
+                .url(BASE_URL+ LOGIN_URL )
+                .post(requestBody)
+                .build();
+        try (Response response = OK_HTTP_CLIENT.newCall(request).execute()) {
+            Assert.assertEquals(response.code(), 400);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    public void loginNegativeTest_WithOutAtEmail_ApiTest() {
+        User user = new User(getProperty("loginyoh@.com", "login"),
+                getProperty("base.properties", "password"));
+        RequestBody requestBody = RequestBody.create(GSON.toJson(user), JSON);
+        Request request = new Request.Builder()
+                .url(BASE_URL + LOGIN_URL)
+                .post(requestBody)
+                .build();
+        Response response;
+        try {
+            response = OK_HTTP_CLIENT.newCall(request).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Assert.assertEquals(response.code(), 401);
     }
 }
